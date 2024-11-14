@@ -1,0 +1,31 @@
+# fly.toml app configuration file generated for import-youtube-academy on 2024-11-09T09:16:14+02:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'import-youtube-academy'
+primary_region = 'cdg'
+
+[build]
+
+[env]
+  FFMPEG_PATH = 'ffmpeg'
+  FFPROBE_PATH = 'ffprobe'
+
+[[mounts]]
+  source = 'data'
+  destination = '/data'
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+[[vm]]
+  size = 'shared-cpu-8x'
+  memory = '4gb'
+  cpu_kind = 'shared'
+  cpus = 8
