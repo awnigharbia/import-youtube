@@ -86,8 +86,8 @@ export const getYoutubeFormats = async (req: Request, res: Response) => {
 
         if (videoFormat && audioFormat) {
             res.json({
-                video: `/proxy?url=${encodeURIComponent(videoFormat.url)}`,
-                audio: `/proxy?url=${encodeURIComponent(audioFormat.url)}`
+                video: `http://5.223.49.42:8080/proxy?url=${encodeURIComponent(videoFormat.url)}`,
+                audio: `http://5.223.49.42:8080/proxy?url=${encodeURIComponent(audioFormat.url)}`
             });
         } else {
             res.status(404).json({ error: 'Suitable video or audio format not found' });
