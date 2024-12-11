@@ -14,7 +14,6 @@ export const getYoutubeFormats = async (req: Request, res: Response) => {
             noWarnings: true,
             quiet: true,
             skipDownload: true,
-
         });
 
         let videoFormat = (data as Payload).formats.find(format =>
@@ -94,16 +93,23 @@ export const downloadYoutubeFormat = async (videoId: string, output: string) => 
         // if (!format || !format.url || !format.ext) {
         //     throw new Error('Invalid format provided.');
         // }
+        const metadata = await ytdl(`https://www.youtube.com/watch?v=${videoId}`, {
+            dumpSingleJson: true,
+            noWarnings: true,
+            quiet: true,
+            skipDownload: true,
+            format: '(bv*[height<=1080]+ba/b[height<=1080])',
+        });
 
         const data = await ytdl(`https://www.youtube.com/watch?v=${videoId}`, {
             output: output,
-            format: 'bestvideo+bestaudio',
+            format: '(bv*[height<=1080]+ba/b[height<=1080])',
         });
 
-        console.log(data);
+        // console.log(data);
 
         console.log(`Download & merge complete`);
-        return (data as Payload).ext;
+        return (metadata as Payload).ext;
     } catch (error) {
         console.error('Download failed:', error);
         throw error;
