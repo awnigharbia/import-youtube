@@ -64,9 +64,9 @@ export const downloadAndConvertYoutubeVideo = async (videoID: string) => {
 
             console.log(`Conversion completed. ${time}s`);
 
-            if (fs.existsSync(generalFilePath)) {
-                fs.unlinkSync(generalFilePath);
-            }
+            // if (fs.existsSync(generalFilePath)) {
+            //     fs.unlinkSync(generalFilePath);
+            // }
 
             // if (fs.existsSync(videoFilePath)) {
             //     fs.unlinkSync(videoFilePath);
