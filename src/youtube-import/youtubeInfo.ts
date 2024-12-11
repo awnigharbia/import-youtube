@@ -101,7 +101,7 @@ export const downloadYoutubeFormat = async (videoId: string, output: string) => 
         });
 
         console.log(`Download complete`);
-        return output;
+        return (data as Payload).ext;
     } catch (error) {
         console.error('Download failed:', error);
         throw error;

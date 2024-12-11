@@ -21,7 +21,7 @@ export const downloadAndConvertYoutubeVideo = async (videoID: string) => {
     // Customize the output file paths and names as per your requirements
     const videoFilePath = `${uploadPath}/video-${videoId}-${randomString}.mp4`;
     const audioFilePath = `${uploadPath}/audio-${videoId}-${randomString}.aac`;
-    const generalFilePath = `${uploadPath}/video-${videoId}-${randomString}`;
+    var generalFilePath = `${uploadPath}/video-${videoId}-${randomString}`;
 
     console.log(videoFilePath);
 
@@ -38,12 +38,15 @@ export const downloadAndConvertYoutubeVideo = async (videoID: string) => {
             //new way
             // const { videoFormat, audioFormat } = await getYoutubeFormatsLocally(videoId!);
 
-            await downloadYoutubeFormat(videoId, generalFilePath)
+            var ext = await downloadYoutubeFormat(videoId, generalFilePath)
             // await downloadYoutubeFormat(videoId, audioFormat!, audioFilePath)
             // await downloadFile(videoFormat!.url, videoFilePath)
             // await downloadFile(audioFormat!.url, audioFilePath)
+            generalFilePath += generalFilePath + ext;
+
 
             console.log('Download all completed.');
+            console.log(generalFilePath);
 
             const outputFileHex = randomBytes(4).toString('hex');
 
