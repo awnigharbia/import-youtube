@@ -4,6 +4,24 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 /**
+ * Ensures the directory exists and has write permissions.
+ * If the directory does not exist, it creates it.
+ * 
+ * @param dirPath - The directory path to check or create.
+ */
+function ensureDirectoryWritable(dirPath: string): void {
+    if (!fs.existsSync(dirPath)) {
+        fs.mkdirSync(dirPath, { recursive: true });
+    }
+
+    try {
+        fs.accessSync(dirPath, fs.constants.W_OK);
+    } catch {
+        throw new Error(`Directory '${dirPath}' is not writable.`);
+    }
+}
+
+/**
  * Downloads a file from the given URL and saves it to the specified local path.
  * 
  * @param url - The URL of the file to download.
@@ -12,6 +30,10 @@ import * as path from 'path';
  */
 export async function downloadFile(url: string, localPath: string): Promise<void> {
     const protocol = url.startsWith('https') ? https : http;
+
+    // Ensure the directory is writable
+    const dirPath = path.dirname(localPath);
+    ensureDirectoryWritable(dirPath);
 
     await new Promise<void>((resolve, reject) => {
         const request = protocol.get(url, (response) => {
