@@ -6,11 +6,11 @@ export const getYoutubeFormats = async (req: Request, res: Response) => {
 
     try {
         const data = await ytdl(`https://www.youtube.com/watch?v=${videoId}`, {
-
+            dumpSingleJson: true,
             noWarnings: true,
             quiet: true,
             skipDownload: true,
-            cookies: 'cookies.txt',
+
         });
 
         let videoFormat = (data as Payload).formats.find(format =>
@@ -33,7 +33,7 @@ export const getYoutubeFormats = async (req: Request, res: Response) => {
             );
         }
 
-
+        res.json((data as Payload).formats)
         if (videoFormat && audioFormat) {
             res.json({ video: videoFormat.url, audio: audioFormat.url });
         } else {
