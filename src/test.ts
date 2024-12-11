@@ -6,6 +6,9 @@ async function download() {
         noWarnings: true,
         cookies: 'cookie.txt'
     })
+
+    console.log(data);
+
 }
 
 download();
