@@ -73,13 +73,13 @@ export const bunnyYoutubeDownloadHandler = async (req: Request, res: Response) =
             return;
         }
 
-        // Check cache for existing response
-        const cachedResponse = cache.get(videoId);
-        if (cachedResponse && skipCache == 'false') {
-            console.log(`Cache hit for video: ${videoId}`);
-            res.json(cachedResponse);
-            return;
-        }
+        // // Check cache for existing response
+        // const cachedResponse = cache.get(videoId);
+        // if (cachedResponse && skipCache == 'false') {
+        //     console.log(`Cache hit for video: ${videoId}`);
+        //     res.json(cachedResponse);
+        //     return;
+        // }
 
 
 
@@ -89,7 +89,7 @@ export const bunnyYoutubeDownloadHandler = async (req: Request, res: Response) =
         res.json(response);
 
         // Add response to cache
-        cache.set(videoId, response);
+        // cache.set(videoId, response);
 
         youtubeQueue.push({
             videoID: videoId,

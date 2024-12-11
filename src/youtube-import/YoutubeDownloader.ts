@@ -14,12 +14,16 @@ const execPromise = promisify(exec);
 export const downloadAndConvertYoutubeVideo = async (videoID: string) => {
     console.log('Starting download and convert youtube video');
 
-    const uploadPath = path.join(config.rootDir, '..', 'data');
+    const uploadPath = path.join(config.rootDir);
+
     const videoId = videoID;
     const randomString = randomBytes(4).toString('hex');
     // Customize the output file paths and names as per your requirements
     const videoFilePath = `${uploadPath}/video-${videoId}-${randomString}.mp4`;
     const audioFilePath = `${uploadPath}/audio-${videoId}-${randomString}.aac`;
+
+    console.log(videoFilePath);
+
     let retries = 0;
     let success = false;
 
