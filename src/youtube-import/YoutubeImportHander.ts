@@ -4,7 +4,6 @@ import { UploadInfo } from "../uploadBunny";
 import { deleteFile } from "../utils";
 import { updateLesson } from "../updateLesson";
 import NodeCache from 'node-cache';
-import { redisClient } from "../server";
 
 const cache = new NodeCache({ stdTTL: 10 }); // Cache TTL set to 1 hour
 

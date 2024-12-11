@@ -38,7 +38,6 @@ var youtubeQueue = new Queue<UploadInfo>(async (task: UploadInfo, callback) => {
         task.guid = guid;
         if (task.videoID != null) {
             const videoData = JSON.stringify({ videoId: task.videoID, guid: guid, lessonId: task.lessonID, status: 'success' });
-            await redisClient.set(task.videoID?.toString(), videoData)
         }
 
         callback(null, task);
