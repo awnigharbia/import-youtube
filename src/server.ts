@@ -38,16 +38,7 @@ router.post('/import/multi/youtube/vdocipher', multipleYoutubeDownloadHandler);
 
 app.use(router);
 
-export const redisClient = createClient({
-    url: 'redis://default:b134adf1a6fe411db0f060d5d8c26669@fly-ytcache.upstash.io:6379',
-})
-
 const server = app.listen(port, async () => {
-    redisClient.on('error', (err) => console.error('Redis client error', err))
-
-    await redisClient.connect()
-    console.log(`Redis server is up`)
-
     console.log(`upload app listening at http://localhost:${port}`)
 })
 
