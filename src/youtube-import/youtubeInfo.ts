@@ -8,7 +8,7 @@ export const getYoutubeFormats = async (req: Request, res: Response) => {
         const data = await ytdl(`https://www.youtube.com/watch?v=${videoId}`, {
             dumpSingleJson: true,
             noWarnings: true,
-            cookies: 'cookie.txt',
+            cookies: 'cookies.txt',
         });
 
         let videoFormat = (data as Payload).formats.find(format =>
