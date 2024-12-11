@@ -21,6 +21,7 @@ export const downloadAndConvertYoutubeVideo = async (videoID: string) => {
     // Customize the output file paths and names as per your requirements
     const videoFilePath = `${uploadPath}/video-${videoId}-${randomString}.mp4`;
     const audioFilePath = `${uploadPath}/audio-${videoId}-${randomString}.aac`;
+    const generalFilePath = `${uploadPath}/video-${videoId}-${randomString}`;
 
     console.log(videoFilePath);
 
@@ -35,10 +36,10 @@ export const downloadAndConvertYoutubeVideo = async (videoID: string) => {
             // await downloadYoutubeAudio(videoId!, audioFilePath)
 
             //new way
-            const { videoFormat, audioFormat } = await getYoutubeFormatsLocally(videoId!);
+            // const { videoFormat, audioFormat } = await getYoutubeFormatsLocally(videoId!);
 
-            await downloadYoutubeFormat(videoId, videoFormat!, videoFilePath)
-            await downloadYoutubeFormat(videoId, audioFormat!, audioFilePath)
+            await downloadYoutubeFormat(videoId, videoFormat!, generalFilePath)
+            // await downloadYoutubeFormat(videoId, audioFormat!, audioFilePath)
             // await downloadFile(videoFormat!.url, videoFilePath)
             // await downloadFile(audioFormat!.url, audioFilePath)
 
@@ -46,29 +47,34 @@ export const downloadAndConvertYoutubeVideo = async (videoID: string) => {
 
             const outputFileHex = randomBytes(4).toString('hex');
 
+            // const finalOutputFilePath = `${uploadPath}/video-${videoId}-${outputFileHex}.mp4`;
             const finalOutputFilePath = `${uploadPath}/video-${videoId}-${outputFileHex}.mp4`;
 
             var startTime = Date.now();
             console.log('Start merging video & audio...');
 
             // Combine video and audio using ffmpeg
-            await execPromise(`${ffmpegPath} -i ${videoFilePath} -i ${audioFilePath} -c:v copy -c:a aac ${finalOutputFilePath}`);
+            // await execPromise(`${ffmpegPath} -i ${videoFilePath} -i ${audioFilePath} -c:v copy -c:a aac ${finalOutputFilePath}`);
 
             var endTime = Date.now();
             var time = (endTime - startTime) / 1000;
 
             console.log(`Conversion completed. ${time}s`);
 
-            if (fs.existsSync(videoFilePath)) {
-                fs.unlinkSync(videoFilePath);
+            if (fs.existsSync(generalFilePath)) {
+                fs.unlinkSync(generalFilePath);
             }
 
-            if (fs.existsSync(audioFilePath)) {
-                fs.unlinkSync(audioFilePath);
-            }
+            // if (fs.existsSync(videoFilePath)) {
+            //     fs.unlinkSync(videoFilePath);
+            // }
+
+            // if (fs.existsSync(audioFilePath)) {
+            //     fs.unlinkSync(audioFilePath);
+            // }
 
             success = true;
-            return finalOutputFilePath;
+            return generalFilePath;
         } catch (err: any) {
             console.error('Error occurred during the download:', err.message);
 
