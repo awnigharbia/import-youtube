@@ -38,7 +38,7 @@ export const downloadAndConvertYoutubeVideo = async (videoID: string) => {
             //new way
             // const { videoFormat, audioFormat } = await getYoutubeFormatsLocally(videoId!);
 
-            await downloadYoutubeFormat(videoId, videoFormat!, generalFilePath)
+            await downloadYoutubeFormat(videoId, generalFilePath)
             // await downloadYoutubeFormat(videoId, audioFormat!, audioFilePath)
             // await downloadFile(videoFormat!.url, videoFilePath)
             // await downloadFile(audioFormat!.url, audioFilePath)

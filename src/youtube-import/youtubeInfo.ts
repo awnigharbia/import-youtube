@@ -89,11 +89,11 @@ export const getYoutubeFormatsLocally = async (videoId: string) => {
 }
 
 
-export const downloadYoutubeFormat = async (videoId: string, format: { url: string, ext: string }, output: string) => {
+export const downloadYoutubeFormat = async (videoId: string, output: string) => {
     try {
-        if (!format || !format.url || !format.ext) {
-            throw new Error('Invalid format provided.');
-        }
+        // if (!format || !format.url || !format.ext) {
+        //     throw new Error('Invalid format provided.');
+        // }
 
         const data = await ytdl(`https://www.youtube.com/watch?v=${videoId}`, {
             output: output,
