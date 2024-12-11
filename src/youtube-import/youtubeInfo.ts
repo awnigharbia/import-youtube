@@ -89,21 +89,18 @@ export const getYoutubeFormatsLocally = async (videoId: string) => {
 }
 
 
-export const downloadYoutubeFormat = async (url: string, format: { url: string, ext: string }, output: string) => {
+export const downloadYoutubeFormat = async (videoId: string, format: { url: string, ext: string }, output: string) => {
     try {
         if (!format || !format.url || !format.ext) {
             throw new Error('Invalid format provided.');
         }
 
-        const command = `yt-dlp -f "${format.ext}" "${format.url}" -o "${output}"`;
+        const data = await ytdl(`https://www.youtube.com/watch?v=${videoId}`, {
+            output: output,
+            format: 'bestvideo+bestaudio',
+        });
 
-        const { stdout, stderr } = await execPromise(command);
-
-        if (stderr) {
-            throw new Error(`Error downloading video: ${stderr}`);
-        }
-
-        console.log(`Download complete: ${stdout}`);
+        console.log(`Download complete`);
         return output;
     } catch (error) {
         console.error('Download failed:', error);
