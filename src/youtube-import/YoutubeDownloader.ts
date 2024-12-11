@@ -42,7 +42,7 @@ export const downloadAndConvertYoutubeVideo = async (videoID: string) => {
             // await downloadYoutubeFormat(videoId, audioFormat!, audioFilePath)
             // await downloadFile(videoFormat!.url, videoFilePath)
             // await downloadFile(audioFormat!.url, audioFilePath)
-            generalFilePath += `${generalFilePath}.${ext}`;
+            generalFilePath += ext;
 
 
             console.log('Download all completed.');
