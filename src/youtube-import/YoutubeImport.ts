@@ -30,8 +30,9 @@ async function getVideoInfoWithRetry(videoId: string, credentialsIndex: number =
 
         // Attempt to get the video info using the current credentials set
         const videoData = await ytdl.getFullInfo(videoId, {
-            oauth2Credentials: oauth2CredentialsArray[credentialsIndex],
-            clients: ['android', 'ios', 'tv']
+            // oauth2Credentials: oauth2CredentialsArray[credentialsIndex],
+
+            // clients: ['android', 'ios', 'tv']
         });
 
         if (videoData.formats.length === 0) {
@@ -138,14 +139,14 @@ async function downloadFormatRecursive(videoId: string, formats: any[], index: n
             const ytdl = new YtdlCore();
 
             const download = await ytdl.download(videoId, {
-                oauth2Credentials: {
-                    accessToken: 'ya29.a0AeDClZDPy4KYNiK6AvUTeti-PI_8xbZ_L3Dl3ShmUFWdqyRdbKkDG9i85RTrSIRP40HmNF7woBj5DJ-beFAZY1SPhdKgp_Kf_OaN5ThuIzSNcScqcF2Yi15zGDPhM5HIejwUtiuhu4Am02p6aGqjnG94Ms8moe7dTIiyaU2TAOnv2_4Z3aIoaCgYKAUwSARASFQHGX2MizWbRAM0jo5gw4ibYjv2mfQ0187',
-                    refreshToken: '1//09_7oFCDo2rV_CgYIARAAGAkSNwF-L9Ir5QPDwOg6gmFcTaEM3JNrPjZZ0OkT8OrMimiEYRXP-I6z5UlovARt33cf_2Xbg_BITAw',
-                    expiryDate: '2024-11-16T18:13:05.838Z',
-                },
+                // oauth2Credentials: {
+                //     accessToken: 'ya29.a0AeDClZDPy4KYNiK6AvUTeti-PI_8xbZ_L3Dl3ShmUFWdqyRdbKkDG9i85RTrSIRP40HmNF7woBj5DJ-beFAZY1SPhdKgp_Kf_OaN5ThuIzSNcScqcF2Yi15zGDPhM5HIejwUtiuhu4Am02p6aGqjnG94Ms8moe7dTIiyaU2TAOnv2_4Z3aIoaCgYKAUwSARASFQHGX2MizWbRAM0jo5gw4ibYjv2mfQ0187',
+                //     refreshToken: '1//09_7oFCDo2rV_CgYIARAAGAkSNwF-L9Ir5QPDwOg6gmFcTaEM3JNrPjZZ0OkT8OrMimiEYRXP-I6z5UlovARt33cf_2Xbg_BITAw',
+                //     expiryDate: '2024-11-16T18:13:05.838Z',
+                // },
                 format: format,
-                disableDefaultClients: true,
-                clients: ['ios', 'android', 'tv', 'tvEmbedded'],
+                // disableDefaultClients: true,
+                // clients: ['ios', 'android', 'tv', 'tvEmbedded'],
             });
 
 
