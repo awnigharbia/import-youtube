@@ -13,6 +13,7 @@ interface UploadInfo {
     fileID?: string;
     additionalData?: any;
     type?: string;
+    dev?: string;
 }
 
 function createVideo(title: string, libId: string, accessKey: string): Promise<any> {
@@ -36,30 +37,52 @@ function createVideo(title: string, libId: string, accessKey: string): Promise<a
 }
 
 
-async function uploadVideo(uploadInfo: UploadInfo): Promise<any> {
-    try {
-        const fileData = fs.readFileSync(uploadInfo.filePath!);
-        const options = {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/octet-stream', // when dealing with files, use 'application/octet-stream'
-                'AccessKey': uploadInfo.accessKey!
-            },
-            body: fileData
-        };
+// async function uploadBunnyVideo(uploadInfo: UploadInfo): Promise<any> {
+//     try {
+// const fileData = fs.readFileSync(uploadInfo.filePath!);
+//         const options = {
+//             method: 'PUT',
+//             headers: {
+//                 'Content-Type': 'application/octet-stream', // when dealing with files, use 'application/octet-stream'
+//                 'AccessKey': uploadInfo.accessKey!
+//             },
+//             body: fileData
+//         };
 
-        const response = await fetch(uploadInfo.url!, options);
-        if (!response.ok) throw new Error(`unexpected response ${response.statusText}`);
-        const data = await response.json();
-        return data;
+//         const response = await fetch(uploadInfo.url!, options);
+//         if (!response.ok) throw new Error(`unexpected response ${response.statusText}`);
+//         const data = await response.json();
+//         return data;
+//     } catch (error) {
+//         console.error('error:', error);
+//         throw error;
+//     }
+// }
+
+
+async function uploadBunnyVideo(uploadInfo: UploadInfo): Promise<any> {
+    try {
+        const fileStream = fs.createReadStream(uploadInfo.filePath!);
+
+        const response = await axios.put(uploadInfo.url!, fileStream, {
+            headers: {
+                'Content-Type': 'application/octet-stream',
+                'AccessKey': uploadInfo.accessKey!,
+            },
+            maxContentLength: Infinity,
+            maxBodyLength: Infinity,
+        });
+
+        return response.data;
     } catch (error) {
         console.error('error:', error);
         throw error;
     }
 }
 
+
 export {
     createVideo,
-    uploadVideo,
+    uploadBunnyVideo,
     UploadInfo,
 }

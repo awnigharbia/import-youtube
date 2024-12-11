@@ -24,40 +24,6 @@ async function createVdocipherVideo(filename: string, fileId: string) {
     return data;
 }
 
-
-// async function uploadVdocipherVideo(uploadInfo: UploadInfo): Promise<any> {
-//     const formData = new FormData();
-//     const file: any = fs.createReadStream(uploadInfo.filePath);
-//     console.log(uploadInfo.additionalData);
-
-//     formData.append("policy", uploadInfo.additionalData.policy);
-//     formData.append("key", uploadInfo.additionalData.key);
-//     formData.append("x-amz-signature", uploadInfo.additionalData["x-amz-signature"]);
-//     formData.append("x-amz-algorithm", uploadInfo.additionalData["x-amz-algorith"]);
-//     formData.append("x-amz-date", uploadInfo.additionalData["x-amz-date"]);
-//     formData.append("x-amz-credential", uploadInfo.additionalData["x-amz-credential"]);
-//     formData.append("success_action_status", "201");
-//     formData.append("success_action_redirect", "");
-//     formData.append("file", file, 'video.mp4');
-
-//     const options: RequestInit = {
-//         method: "POST",
-//         body: formData,
-//     };
-
-//     try {
-//         const response = await fetch(uploadInfo.additionalData.uploadLink, options);
-//         if (!response.ok) {
-//             throw new Error(`Request failed with status ${response.status}`);
-//         }
-//         const body = await response.text();
-//         console.log(body);
-//     } catch (error) {
-//         console.error(error);
-//         throw error;
-//     }
-// }
-
 async function uploadVdocipherVideo(uploadInfo: UploadInfo): Promise<any> {
     var options = {
         method: "POST",
@@ -88,7 +54,7 @@ async function uploadVdocipherVideo(uploadInfo: UploadInfo): Promise<any> {
                     console.log(body);
                     resolve(body);
                 } else {
-                    reject(new Error(`Failed with status code: ${response.statusCode}`));
+                    reject(new Error(`Failed to upload video to vdocipher with status code: ${response.statusCode}`));
                 }
             });
         });

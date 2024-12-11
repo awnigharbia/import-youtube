@@ -16,9 +16,14 @@ async function isLinkReady(url: string) {
     }
 }
 
-const deleteFile = (path: string) => {
+const deleteFile = async (path: string) => {
     if (fs.existsSync(path ?? '')) {
-        fs.unlinkSync(path ?? '');
+        await fs.unlink(path ?? '', (err) => {
+            if (err) {
+                console.error(`Deleting ${path} error with ${err}`);
+            };
+            console.log(`${path} was deleted`);
+        });
     }
 }
 
