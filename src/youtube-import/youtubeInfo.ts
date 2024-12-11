@@ -1,6 +1,7 @@
 import ytdl, { Payload } from 'youtube-dl-exec'
 import { Request, Response } from "express";
 import { isLinkReady } from '../utils';
+import axios from 'axios';
 
 // export const getYoutubeFormats = async (req: Request, res: Response) => {
 //     const videoId = req.query.id as string;
@@ -45,7 +46,6 @@ import { isLinkReady } from '../utils';
 //     }
 // }
 
-
 export const getYoutubeFormats = async (req: Request, res: Response) => {
     const videoId = req.query.id as string;
 
@@ -85,11 +85,34 @@ export const getYoutubeFormats = async (req: Request, res: Response) => {
         }
 
         if (videoFormat && audioFormat) {
-            res.json({ video: videoFormat.url, audio: audioFormat.url });
+            res.json({
+                video: `/proxy?url=${encodeURIComponent(videoFormat.url)}`,
+                audio: `/proxy?url=${encodeURIComponent(audioFormat.url)}`
+            });
         } else {
             res.status(404).json({ error: 'Suitable video or audio format not found' });
         }
     } catch (error: any) {
         res.status(500).json({ error: 'Failed to fetch video formats', details: error.message });
+    }
+};
+
+// Proxy route
+export const proxy = async (req: Request, res: Response) => {
+    const url = req.query.url as string;
+
+    if (!url) {
+        return res.status(400).json({ error: 'Missing URL parameter' });
+    }
+
+    try {
+        const response = await axios.get(url, { responseType: 'stream' });
+
+        res.setHeader('Content-Type', response.headers['content-type']);
+        res.setHeader('Content-Disposition', response.headers['content-disposition'] || 'inline');
+
+        response.data.pipe(res);
+    } catch (error: any) {
+        res.status(500).json({ error: 'Failed to proxy the request', details: error.message });
     }
 };
