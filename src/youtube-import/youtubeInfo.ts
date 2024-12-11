@@ -100,7 +100,9 @@ export const downloadYoutubeFormat = async (videoId: string, output: string) => 
             format: 'bestvideo+bestaudio',
         });
 
-        console.log(`Download complete`);
+        console.log(data);
+
+        console.log(`Download & merge complete`);
         return (data as Payload).ext;
     } catch (error) {
         console.error('Download failed:', error);
