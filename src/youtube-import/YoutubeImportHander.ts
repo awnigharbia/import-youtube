@@ -112,7 +112,7 @@ export const bunnyYoutubeDownloadHandler = async (req: Request, res: Response) =
             });
     } catch (err) {
         // console.error('Error occurred during the download:', err);
-        res.status(500).json({ error: 'Error occurred during the download', err: err });
+        res.status(500).json({ error: 'Error occurred during the process', err: err });
     }
 };
 
