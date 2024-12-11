@@ -34,6 +34,7 @@ async function getVideoInfoWithRetry(videoId: string, credentialsIndex: number =
         // Attempt to get the video info using the current credentials set
         const videoData = await ytdl.getFullInfo(videoId, {
             oauth2Credentials: oauth2CredentialsArray[credentialsIndex],
+            disableDefaultClients: true,
             clients: ['android', 'ios', 'tv']
         });
 
@@ -142,9 +143,9 @@ async function downloadFormatRecursive(videoId: string, formats: any[], index: n
 
             const download = await ytdl.download(videoId, {
                 oauth2Credentials: {
-                    accessToken: 'ya29.a0AeDClZDPy4KYNiK6AvUTeti-PI_8xbZ_L3Dl3ShmUFWdqyRdbKkDG9i85RTrSIRP40HmNF7woBj5DJ-beFAZY1SPhdKgp_Kf_OaN5ThuIzSNcScqcF2Yi15zGDPhM5HIejwUtiuhu4Am02p6aGqjnG94Ms8moe7dTIiyaU2TAOnv2_4Z3aIoaCgYKAUwSARASFQHGX2MizWbRAM0jo5gw4ibYjv2mfQ0187',
-                    refreshToken: '1//09_7oFCDo2rV_CgYIARAAGAkSNwF-L9Ir5QPDwOg6gmFcTaEM3JNrPjZZ0OkT8OrMimiEYRXP-I6z5UlovARt33cf_2Xbg_BITAw',
-                    expiryDate: '2024-11-16T18:13:05.838Z',
+                    accessToken: 'ya29.a0AeDClZBdO6YcJNGcr5z4mEY3lwRc-heAxw1GACIovmhb_CrABAK5W9iRM1T79ks0fcIGGh60muDrHDMUzIV3Mkm6-au48zl9nQAWmsvVhBM86IH8ZypxrNAyWcTtfXlPlOx5EIQgmj3i5Wa_UZowx2DB6zlwPPFM2WMJOokPdPcwDZtmvfN7aCgYKAdkSARASFQHGX2MiyerpHGw-H0Qlpi7QEV535w0187',
+                    refreshToken: '1//03FAMNvnO3Cq5CgYIARAAGAMSNwF-L9Ir7-hOfdtW_kAFbYb3WcHM7EyDOV6OR7MsbiheJo2tq4HDAl54b9zBnnUiquy44QMi9mI',
+                    expiryDate: '2024-12-12T06:00:14.017Z',
                 },
                 format: format,
                 disableDefaultClients: true,
