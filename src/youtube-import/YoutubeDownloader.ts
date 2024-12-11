@@ -1,12 +1,11 @@
 import { exec } from 'child_process';
-import { promisify } from 'util';
 import { randomBytes } from 'crypto';
 import fs from 'fs';
 import path from 'path';
-import { downloadYoutubeAudio, downloadYoutubeVideo } from './YoutubeImport';
+import { promisify } from 'util';
 import config from '../config/config';
 import { downloadFile } from '../utils/downloadFile';
-import { fetchYouTubeData } from '../utils/fetchYoutubeInfo';
+import { getYoutubeFormatsLocally } from './youtubeInfo';
 
 
 const ffmpegPath = config.ffmpeg;
@@ -32,9 +31,9 @@ export const downloadAndConvertYoutubeVideo = async (videoID: string) => {
             // await downloadYoutubeAudio(videoId!, audioFilePath)
 
             //new way
-            const videoInfo = await fetchYouTubeData(videoId!);
-            await downloadFile(videoInfo.video, videoFilePath)
-            await downloadFile(videoInfo.audio, videoFilePath)
+            const { videoFormat, audioFormat } = await getYoutubeFormatsLocally(videoId!);
+            await downloadFile(videoFormat!.url, videoFilePath)
+            await downloadFile(audioFormat!.url, videoFilePath)
 
             console.log('Download all completed.');
 

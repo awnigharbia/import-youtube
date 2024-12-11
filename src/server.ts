@@ -1,6 +1,6 @@
 import bodyParser from 'body-parser';
 import express from 'express';
-import { getYoutubeFormats, proxy } from './youtube-import/youtubeInfo';
+import { getYoutubeFormats } from './youtube-import/youtubeInfo';
 import { bunnyYoutubeDownloadHandler, multipleYoutubeDownloadHandler, vdocipherYoutubeDownloadHandler } from './youtube-import/YoutubeImportHander';
 
 const app = express();
@@ -32,7 +32,6 @@ router.get('/import/youtube/bunny', bunnyYoutubeDownloadHandler);
 router.post('/import/multi/youtube/vdocipher', multipleYoutubeDownloadHandler);
 
 router.get('/fetch/youtube', getYoutubeFormats);
-router.get('/proxy', proxy);
 
 app.use(router);
 
