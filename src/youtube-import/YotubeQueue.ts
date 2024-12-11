@@ -3,7 +3,6 @@ import { UploadInfo } from '../uploadBunny';
 import { downloadAndConvertYoutubeVideo } from './YoutubeDownloader';
 import { vdocipherUploadHandler } from './VdocipherUploadHandler';
 import { bunnyUploadHandler } from './BunnyUploadHandler';
-import { redisClient } from '../server';
 
 export var currentYoutubeJobs = 0;
 
