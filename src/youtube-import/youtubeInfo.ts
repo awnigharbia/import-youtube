@@ -33,7 +33,7 @@ export const getYoutubeFormats = async (req: Request, res: Response) => {
             );
         }
 
-        res.json((data as Payload).formats)
+        // res.json((data as Payload).formats)
         if (videoFormat && audioFormat) {
             res.json({ video: videoFormat.url, audio: audioFormat.url });
         } else {
