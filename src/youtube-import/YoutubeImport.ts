@@ -25,6 +25,9 @@ async function getVideoInfoWithRetry(videoId: string, credentialsIndex: number =
     }
 
     try {
+
+
+
         const ytdl = new YtdlCore();
         console.log(`Attempting to retrieve video info with credentials set #${credentialsIndex + 1}`);
 
