@@ -46,7 +46,7 @@ var youtubeQueue = new Queue<UploadInfo>(async (task: UploadInfo, callback) => {
         console.log('Error in youtubeQueue: ', err);
         callback(task);
     }
-}, { concurrent: 5 })
+}, { concurrent: 1 })
 
 
 export {

@@ -1,5 +1,9 @@
 import ytdl, { Payload } from 'youtube-dl-exec'
 import { Request, Response } from "express";
+import { exec } from 'child_process';
+import util from 'util';
+
+const execPromise = util.promisify(exec);
 
 export const getYoutubeFormats = async (req: Request, res: Response) => {
     const videoId = req.query.id as string;
@@ -53,8 +57,6 @@ export const getYoutubeFormatsLocally = async (videoId: string) => {
             dumpSingleJson: true,
             noWarnings: true,
             quiet: true,
-            skipDownload: true,
-
         });
 
         let videoFormat = (data as Payload).formats.find(format =>
@@ -86,3 +88,25 @@ export const getYoutubeFormatsLocally = async (videoId: string) => {
     }
 }
 
+
+export const downloadYoutubeFormat = async (url: string, format: { url: string, ext: string }, output: string) => {
+    try {
+        if (!format || !format.url || !format.ext) {
+            throw new Error('Invalid format provided.');
+        }
+
+        const command = `yt-dlp -f "${format.ext}" "${format.url}" -o "${output}"`;
+
+        const { stdout, stderr } = await execPromise(command);
+
+        if (stderr) {
+            throw new Error(`Error downloading video: ${stderr}`);
+        }
+
+        console.log(`Download complete: ${stdout}`);
+        return output;
+    } catch (error) {
+        console.error('Download failed:', error);
+        throw error;
+    }
+};

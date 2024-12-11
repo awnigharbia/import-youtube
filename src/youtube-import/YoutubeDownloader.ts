@@ -5,7 +5,7 @@ import path from 'path';
 import { promisify } from 'util';
 import config from '../config/config';
 import { downloadFile } from '../utils/downloadFile';
-import { getYoutubeFormatsLocally } from './youtubeInfo';
+import { downloadYoutubeFormat, getYoutubeFormatsLocally } from './youtubeInfo';
 
 
 const ffmpegPath = 'ffmpeg';
@@ -37,9 +37,10 @@ export const downloadAndConvertYoutubeVideo = async (videoID: string) => {
             //new way
             const { videoFormat, audioFormat } = await getYoutubeFormatsLocally(videoId!);
 
-
-            await downloadFile(videoFormat!.url, videoFilePath)
-            await downloadFile(audioFormat!.url, audioFilePath)
+            await downloadYoutubeFormat(videoFormat!.url, videoFormat!, videoFilePath)
+            await downloadYoutubeFormat(audioFormat!.url, audioFormat!, audioFilePath)
+            // await downloadFile(videoFormat!.url, videoFilePath)
+            // await downloadFile(audioFormat!.url, audioFilePath)
 
             console.log('Download all completed.');
 
