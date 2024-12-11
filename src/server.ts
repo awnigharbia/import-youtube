@@ -3,7 +3,6 @@ import express from 'express';
 import path from 'path';
 import serveIndex from 'serve-index';
 import { bunnyYoutubeDownloadHandler, multipleYoutubeDownloadHandler, vdocipherYoutubeDownloadHandler } from './youtube-import/YoutubeImportHander';
-import { createClient } from 'redis'
 
 const app = express();
 const port = 8080;
