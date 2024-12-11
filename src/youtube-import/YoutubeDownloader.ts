@@ -5,6 +5,8 @@ import fs from 'fs';
 import path from 'path';
 import { downloadYoutubeAudio, downloadYoutubeVideo } from './YoutubeImport';
 import config from '../config/config';
+import { downloadFile } from '../utils/downloadFile';
+import { fetchYouTubeData } from '../utils/fetchYoutubeInfo';
 
 
 const ffmpegPath = config.ffmpeg;
@@ -24,9 +26,15 @@ export const downloadAndConvertYoutubeVideo = async (videoID: string) => {
 
     while (!success && retries < 3) {
         try {
-            await downloadYoutubeVideo(videoId!, videoFilePath);
+            //old way
+            // await downloadYoutubeVideo(videoId!, videoFilePath);
 
-            await downloadYoutubeAudio(videoId!, audioFilePath)
+            // await downloadYoutubeAudio(videoId!, audioFilePath)
+
+            //new way
+            const videoInfo = await fetchYouTubeData(videoId!);
+            await downloadFile(videoInfo.video, videoFilePath)
+            await downloadFile(videoInfo.audio, videoFilePath)
 
             console.log('Download all completed.');
 
