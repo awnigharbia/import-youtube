@@ -6,9 +6,9 @@ import { sendTelegramMessage } from "./telegramReport";
 
 const oauth2CredentialsArray = [
     {
-        accessToken: 'ya29.a0AeDClZAjVq1GQc5jmXAvDMqi0jc3F7WGdhs2-WTg5ZCly-BZvyIjNE3C9qm35waac0GvtPJnO7qXoKkKmzW_FLuDnBSg7nud80SKYL_bK2Azjx9adF8RRKdLZtlRENHYZbnhlYKjPOQ5k_-29Sx8VliewXxjBtCeq9SU1611dwyhIA5SsCa-aCgYKAWkSARMSFQHGX2MixFOmWE0jQmbkawO_Ev9ZIQ0187',
-        refreshToken: '1//03mIygnxuk0QfCgYIARAAGAMSNwF-L9IrU93FpZyl2RR53uqhdsULj8pJHb3wfGj4yoADHNQwqycu1l9L8CDmfWJoENcwWiqSD7s',
-        expiryDate: '2024-11-23T04:37:23.344Z',
+        accessToken: 'ya29.a0AeDClZC76U0qafpiPICxwxP5kLGkdnAS6WThcz-F-N1YZ5L8D2fkHhlIF5QMlr5yIA9dWKue3aYmVVgTuJO3sa-DNiMJ-P09XmO9qFu2BOvgv2Qu2WQm15Z7jw7MY3X5Y2j-4lrM3amcqSPU_Mh5HYD1iD97YTcEPo7f6fTcWaYan9FuvNRLaCgYKAToSARESFQHGX2MiDOjDGUUkvMOZ0gQSBHBxWA0187',
+        refreshToken: '1//03l0xpNpvSrZ1CgYIARAAGAMSNwF-L9IrUONgCiMG4Drbv4k5lnnjkMBx9kxJgbx5Lyim1KLrA28WtByEliT9OfPDwXPRXTX5XWs',
+        expiryDate: '2024-12-12T02:07:17.426Z',
     },
     {
         accessToken: 'ya29.a0AeDClZB9vygix77SMzaOkIjD0DCO9gLsRuAFwxRrRwT6Oq_JoZv-FL7Rh-UryTUf1ww9lYai0nCvy5cClvnYA2SFmuq-U3g1Mv0RjF9-dPDtk2Gf7GH2DSEbiA9oNm587tE4Jz1YKUTvnh6w_dMeNwmAi7oRqiAf1yiaDTnmBFEkp6MePLG-aCgYKAQASARASFQHGX2MiZ53OUImnGPX4-kCQZZbEHg0187',
@@ -30,9 +30,8 @@ async function getVideoInfoWithRetry(videoId: string, credentialsIndex: number =
 
         // Attempt to get the video info using the current credentials set
         const videoData = await ytdl.getFullInfo(videoId, {
-            // oauth2Credentials: oauth2CredentialsArray[credentialsIndex],
-
-            // clients: ['android', 'ios', 'tv']
+            oauth2Credentials: oauth2CredentialsArray[credentialsIndex],
+            clients: ['android', 'ios', 'tv']
         });
 
         if (videoData.formats.length === 0) {
@@ -139,14 +138,14 @@ async function downloadFormatRecursive(videoId: string, formats: any[], index: n
             const ytdl = new YtdlCore();
 
             const download = await ytdl.download(videoId, {
-                // oauth2Credentials: {
-                //     accessToken: 'ya29.a0AeDClZDPy4KYNiK6AvUTeti-PI_8xbZ_L3Dl3ShmUFWdqyRdbKkDG9i85RTrSIRP40HmNF7woBj5DJ-beFAZY1SPhdKgp_Kf_OaN5ThuIzSNcScqcF2Yi15zGDPhM5HIejwUtiuhu4Am02p6aGqjnG94Ms8moe7dTIiyaU2TAOnv2_4Z3aIoaCgYKAUwSARASFQHGX2MizWbRAM0jo5gw4ibYjv2mfQ0187',
-                //     refreshToken: '1//09_7oFCDo2rV_CgYIARAAGAkSNwF-L9Ir5QPDwOg6gmFcTaEM3JNrPjZZ0OkT8OrMimiEYRXP-I6z5UlovARt33cf_2Xbg_BITAw',
-                //     expiryDate: '2024-11-16T18:13:05.838Z',
-                // },
+                oauth2Credentials: {
+                    accessToken: 'ya29.a0AeDClZDPy4KYNiK6AvUTeti-PI_8xbZ_L3Dl3ShmUFWdqyRdbKkDG9i85RTrSIRP40HmNF7woBj5DJ-beFAZY1SPhdKgp_Kf_OaN5ThuIzSNcScqcF2Yi15zGDPhM5HIejwUtiuhu4Am02p6aGqjnG94Ms8moe7dTIiyaU2TAOnv2_4Z3aIoaCgYKAUwSARASFQHGX2MizWbRAM0jo5gw4ibYjv2mfQ0187',
+                    refreshToken: '1//09_7oFCDo2rV_CgYIARAAGAkSNwF-L9Ir5QPDwOg6gmFcTaEM3JNrPjZZ0OkT8OrMimiEYRXP-I6z5UlovARt33cf_2Xbg_BITAw',
+                    expiryDate: '2024-11-16T18:13:05.838Z',
+                },
                 format: format,
-                // disableDefaultClients: true,
-                // clients: ['ios', 'android', 'tv', 'tvEmbedded'],
+                disableDefaultClients: true,
+                clients: ['ios', 'android', 'tv', 'tvEmbedded'],
             });
 
 
