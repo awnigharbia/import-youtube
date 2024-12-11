@@ -8,7 +8,7 @@ import { downloadFile } from '../utils/downloadFile';
 import { getYoutubeFormatsLocally } from './youtubeInfo';
 
 
-const ffmpegPath = config.ffmpeg;
+const ffmpegPath = 'ffmpeg';
 const execPromise = promisify(exec);
 
 export const downloadAndConvertYoutubeVideo = async (videoID: string) => {
