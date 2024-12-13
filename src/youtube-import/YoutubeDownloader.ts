@@ -12,7 +12,7 @@ const ffmpegPath = 'ffmpeg';
 const execPromise = promisify(exec);
 
 export const downloadAndConvertYoutubeVideo = async (videoID: string) => {
-    console.log('Starting download and convert youtube video');
+    // console.log('Starting download and convert youtube video');
 
     const uploadPath = path.join(config.rootDir);
 
@@ -44,9 +44,8 @@ export const downloadAndConvertYoutubeVideo = async (videoID: string) => {
             // await downloadFile(audioFormat!.url, audioFilePath)
             generalFilePath += `.${ext}`;
 
-
-            console.log('Download all completed.');
-            console.log(generalFilePath);
+            // console.log('Download all completed.');
+            // console.log(generalFilePath);
 
             const outputFileHex = randomBytes(4).toString('hex');
 
@@ -54,19 +53,15 @@ export const downloadAndConvertYoutubeVideo = async (videoID: string) => {
             const finalOutputFilePath = `${uploadPath}/video-${videoId}-${outputFileHex}.mp4`;
 
             var startTime = Date.now();
-            console.log('Start merging video & audio...');
+            // console.log('Start merging video & audio...');
 
             // Combine video and audio using ffmpeg
             // await execPromise(`${ffmpegPath} -i ${videoFilePath} -i ${audioFilePath} -c:v copy -c:a aac ${finalOutputFilePath}`);
 
-            var endTime = Date.now();
-            var time = (endTime - startTime) / 1000;
+            // var endTime = Date.now();
+            // var time = (endTime - startTime) / 1000;
 
-            console.log(`Conversion completed. ${time}s`);
-
-            // if (fs.existsSync(generalFilePath)) {
-            //     fs.unlinkSync(generalFilePath);
-            // }
+            // console.log(`Conversion completed. ${time}s`);
 
             // if (fs.existsSync(videoFilePath)) {
             //     fs.unlinkSync(videoFilePath);

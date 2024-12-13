@@ -5,7 +5,7 @@ import { deleteFile } from "../utils";
 import { updateLesson } from "../updateLesson";
 import NodeCache from 'node-cache';
 
-const cache = new NodeCache({ stdTTL: 10 }); // Cache TTL set to 1 hour
+const cache = new NodeCache({ stdTTL: 30 }); // Cache TTL set to 1 hour
 
 export const vdocipherYoutubeDownloadHandler = async (req: Request, res: Response) => {
     try {
@@ -44,7 +44,6 @@ export const vdocipherYoutubeDownloadHandler = async (req: Request, res: Respons
             dev: dev,
         })
             .on('finish', async function (result: UploadInfo) {
-                deleteFile(result.filePath ?? '')
                 console.log('Finished downloading and uploading to bunny server', result);
                 if (result.lessonID && result.guid)
                     await updateLesson(result.lessonID, result.guid, 1, result.dev === 'true');
@@ -59,14 +58,14 @@ export const vdocipherYoutubeDownloadHandler = async (req: Request, res: Respons
 };
 
 export const bunnyYoutubeDownloadHandler = async (req: Request, res: Response) => {
+
     try {
         const videoId = req.query.id as string;
         const libId = req.query.library_id as string;
-        const libAccessKey = req.query.access_key as string;
         const lessonId = req.query.lesson_id as string;
+        const libAccessKey = req.query.access_key as string;
         const skipCache = req.query.skip_cache as string ?? 'false';
         const dev = req.query.dev as string ?? 'false';
-
 
         if (!videoId) {
             res.status(400).json({ error: 'Missing required parameter' });
@@ -80,10 +79,6 @@ export const bunnyYoutubeDownloadHandler = async (req: Request, res: Response) =
             res.json(cachedResponse);
             return;
         }
-
-
-
-        console.log(`Starting download for video:${videoId}, lesson:${lessonId}, lib:${libId}`);
 
         const response = { videoId: videoId, message: 'Download started' };
         res.json(response);
@@ -100,10 +95,6 @@ export const bunnyYoutubeDownloadHandler = async (req: Request, res: Response) =
             dev: dev,
         })
             .on('finish', async function (result: UploadInfo) {
-                console.log('Clean video files after uploading');
-                deleteFile(result.filePath ?? '');
-                console.log('Done.');
-
                 console.log('Finished downloading and uploading to bunny server', result);
                 if (result.lessonID && result.guid)
                     await updateLesson(result.lessonID, result.guid, 1, result.dev === 'true');
@@ -112,6 +103,7 @@ export const bunnyYoutubeDownloadHandler = async (req: Request, res: Response) =
             });
     } catch (err) {
         // console.error('Error occurred during the download:', err);
+        // await updateLesson(lessonID, guid, 0, dev === 'true');
         res.status(500).json({ error: 'Error occurred during the process', err: err });
     }
 };
