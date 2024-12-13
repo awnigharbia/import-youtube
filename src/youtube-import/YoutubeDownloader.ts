@@ -23,8 +23,6 @@ export const downloadAndConvertYoutubeVideo = async (videoID: string) => {
     const audioFilePath = `${uploadPath}/audio-${videoId}-${randomString}.aac`;
     var generalFilePath = `${uploadPath}/video-${videoId}-${randomString}`;
 
-    console.log(videoFilePath);
-
     let retries = 0;
     let success = false;
 
